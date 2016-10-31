@@ -44,7 +44,7 @@ function onChangeFrequency(frequency) {
 
 	var index = frequencies.indexOf(frequency);
 	if (index != -1) {
-		$(frequencies[index].toString()).text(frequencies[index].toString() + sources[index].source.gain.gain.value);
+		$(frequencies[index].toString()).text(frequencies[index].toString() + sources[index].source.gain.value);
 	}
 }
 
