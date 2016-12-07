@@ -34,22 +34,15 @@ function startAmbient() {
 	var context = (new AudioWM()).context;
 
 	//start sources
-	for (frequency of frequencies)
-		sources.push(new Source(context, frequency));
+	// for (frequency of frequencies)
+	// 	sources.push(new Source(context, frequency));
 
 	//start client and adapt out ambient
-	client = new Client(context, frequencies, adaptAmbient, onChangeFrequency);
+	client = new Client((new AudioWM()).context, frequencies, adaptAmbient, onChangeFrequency);
 }
 
 function adaptAmbient() {
-
-	//connect our sources with the client and set default gain value
-	for (source of sources) {
-		source.destination = client.receiver.analyser;
-		source.gain.connect(source.destination);
-
-		changeSourceGain(source, 0.5);
-	}
+	return;
 }
 
 function onChangeFrequency(frequency) {

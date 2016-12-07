@@ -43,6 +43,12 @@ function startAmbient() {
   //start sources
   for (frequency of frequencies)
 	sources.push(new Source(context, frequency));
+
+	for(source of sources) {
+		source.start();
+		source.gain.gain.value = 0;
+	}
+	
 }
 
 function changeSourceGain(source, value) {
