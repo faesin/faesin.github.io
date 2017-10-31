@@ -56,7 +56,7 @@
 
         messages[receiver.checkMessage()] += 1
 
-        if(progress < 300000)
+        if(progress < 60000)
           window.requestAnimationFrame(checkMessage)
         else
           start = null
@@ -71,7 +71,7 @@
         setTimeout(function() {
           showResult(messages);
           toggleButton(false);
-        }, 300100);
+        }, 60100);
       }
 
       const showResult = function(result) {
