@@ -7,6 +7,7 @@ function Emitter(context) {
 
   this.initialize(); //initializes with default behavior
 }
+
 Emitter.prototype = Object.create(AudioWM.prototype);
 Emitter.prototype.initialize = function(start, mdc, bitLength) {
 

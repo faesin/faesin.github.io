@@ -111,6 +111,7 @@ Receiver.prototype.manageEventLoop = function() {
       this.loop();
   }
 }
+
 Receiver.prototype.addMessageEvent = function(message, callback) {
 
   //adding event to list
@@ -120,6 +121,7 @@ Receiver.prototype.addMessageEvent = function(message, callback) {
 
   this.manageEventLoop();
 }
+
 Receiver.prototype.removeMessageEvent = function(message, callback) {
 
   //removing event
@@ -134,6 +136,7 @@ Receiver.prototype.removeMessageEvent = function(message, callback) {
 
   this.manageEventLoop();
 }
+
 Receiver.prototype.checkMessageLoop = function(timestamp) {
 
   var message = this.checkMessage();
@@ -157,10 +160,12 @@ Receiver.prototype.checkMessageLoop = function(timestamp) {
 
   requestAnimationFrame(this.loop.bind(this));
 }
+
 Receiver.prototype.updateBouncingBuffer = function(message) {
   this.bouncingBuffer.push(message);
   this.bouncingBuffer.shift();
 }
+
 Receiver.prototype.isBouncing = function() {
 
   //check if it's bouncing
