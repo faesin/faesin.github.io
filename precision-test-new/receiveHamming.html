@@ -50,8 +50,8 @@
           length = 0
         }
 
-        let progress = timestamp - start
-        console.log('receiver.lastMessage = ', receiver.lastMessage)
+        let progress = timestamp - start, m = receiver.lastMessage
+        console.log('receiver.lastMessage = ', m)
 
         if(messages.positive == null || messages.negative == null ) {
           messages.positive = 0
@@ -60,16 +60,21 @@
 
         length += 1
 
-        let decoded = decode(dec2bin(receiver.lastMessage).slice(1))
-        if(messages[parseInt(decoded, 2)] == null) {
-          messages[parseInt(decoded, 2)] = 0;
-        }
-        
-        messages[parseInt(decoded, 2)] += 1
+        if(!Number.isNaN(m)) {
+          let decoded = decode(dec2bin(m).slice(1))
+          
+          if(messages[parseInt(decoded, 2)] == null)
+            messages[parseInt(decoded, 2)] = 0;
+          
+          messages[parseInt(decoded, 2)] += 1
+          
+          let avgs = receiver.getIntensityValues(receiver.referencePositive, receiver.referenceNegative)
+          messages.positive += avgs[0]
+          messages.negative += avgs[1]
 
-        let avgs = receiver.getIntensityValues(receiver.referencePositive, receiver.referenceNegative)
-        messages.positive += avgs[0]
-        messages.negative += avgs[1]
+        }else{
+          messages[m] += 1
+        }
 
         if(progress < time)
           window.requestAnimationFrame(checkMessage)
