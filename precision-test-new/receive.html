@@ -24,7 +24,7 @@
           context,
           messages,
           length,
-          time = 60000
+          time = 300000
 
       function dec2bin(dec){
         return ("00000000" + (dec >>> 0).toString(2)).slice(-8)
@@ -46,7 +46,7 @@
       function onStart() {
         toggleButton(true)
         console.log('start!')
-        time = $('#time').val()
+        // time = $('#time').val()
         startChecking()
       }
 
@@ -164,8 +164,8 @@
     </script>
 
     <div>
-      <p>Time</p>
-      <input id="time" type="number" value="60000">
+      <!-- <p>Time</p> -->
+      <!-- <input id="time" type="number" value="60000"> -->
       <p>Expected</p>
       <input id="data" type="number" value="0">
       <button onclick="onStart()">START</button>
