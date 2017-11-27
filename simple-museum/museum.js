@@ -62,16 +62,19 @@ $(document).ready(() => {
 
   const checkForMessage = () => {
     let positive = receiver.getIntensityValues(receiver.referencePositive)[0]
-    $('#positive').html(positive)
+    $('#positive').html(`Positive Intensity: ${positive}`)
+
+    $('#pIsValid').html(`positive >= minimumIntensity : ${positive >= minimumIntensity}`)
 
     if(positive >= minimumIntensity) {
       let msg = receiver.lastMessage
       
+      $('#received').html(`Received ${msg}`)
       if(transitions[currentState][msg] != null) {
         currentState = transitions[currentState][msg]
       }
 
-      $('#state').html(currentState)
+      $('#state').html(`Current State: ${currentState}`)
       // const page = /*fromGrayCode(msg)*/ currentState - 1
       // Reveal.slide(page, 0)
     }
@@ -84,6 +87,8 @@ $(document).ready(() => {
                           () => console.log('Receiver ready'),
                           (err) => console.error(err))
 
+  $('#state').html(`Current State: ${currentState}`)
+  $('#received').html(`Received ${null}`)
   checkForMessage()
   receiver.onChangeMessage = (msg) => { }
 })
