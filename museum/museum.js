@@ -66,17 +66,10 @@ $(document).ready(() => {
       let positive = receiver.getIntensityValues(receiver.referencePositive)[0]
       if(positive >= minimumIntensity) {
         let msg = receiver.lastMessage
-        console.log('msg', msg)
-
-        console.log('currentState', currentState)
-        console.log('possible transitions', transitions[currentState])
-
+        
         if(transitions[currentState][msg] != null) {
           currentState = transitions[currentState][msg]
         }
-
-        console.log('new State', currentState)
-        console.log('new transitions', transitions[currentState])
 
         const page = /*fromGrayCode(msg)*/ currentState - 1
         Reveal.slide(page, 0)
@@ -88,32 +81,32 @@ $(document).ready(() => {
     Reveal.addEventListener('ready', function(event) {
       console.log('slides ready')
       context = (new AudioMarkings()).context
-      receiver = new Receiver(() => console.log('Receiver ready'),
-                              (err) => console.error(err),
-                              context)
+      receiver = new Receiver(context,
+                              () => console.log('Receiver ready'),
+                              (err) => console.error(err))
 
-      console.log(receiver.onChangeMessage)
-
+      checkForMessage()
       receiver.onChangeMessage = (msg) => {
-        console.log('msg', msg)
-
-        console.log('currentState', currentState)
-        console.log('possible transitions', transitions[currentState])
-        if(transitions[currentState][msg] != null) {
-          currentState = transitions[currentState][msg]
-        }
-
-        console.log('new State', currentState)
-        console.log('new transitions', transitions[currentState])
-
-        const page = /*fromGrayCode(msg)*/ currentState - 1
-        Reveal.slide(page, 0)
+        // console.log('onChangeMessage ', msg)
       }
+
+      //   console.log('currentState', currentState)
+      //   console.log('possible transitions', transitions[currentState])
+      //   if(transitions[currentState][msg] != null) {
+      //     currentState = transitions[currentState][msg]
+      //   }
+
+      //   console.log('new State', currentState)
+      //   console.log('new transitions', transitions[currentState])
+
+      //   const page = /*fromGrayCode(msg)*/ currentState - 1
+      //   Reveal.slide(page, 0)
+      // }
     })
 
-    Reveal.addEventListener('slidechanged', function(event) {
-      console.log(event.indexh, event.indexv);
-    })
+    // Reveal.addEventListener('slidechanged', function(event) {
+    //   console.log(event.indexh, event.indexv);
+    // })
 
     Reveal.initialize()
   })
