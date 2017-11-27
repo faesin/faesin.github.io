@@ -46,6 +46,7 @@
       function onStart() {
         toggleButton(true)
         console.log('start!')
+        time = $('#time').val()
         startChecking()
       }
 
@@ -55,7 +56,6 @@
 
       function checkMessage(timestamp) {
         if(!start) {
-          console.log('start', start)
           start = timestamp
           length = 0
         }
@@ -92,6 +92,7 @@
         messages = {}
         length = 0
         showResult(null)
+
 
         window.requestAnimationFrame(checkMessage)
         setTimeout(function() {
@@ -158,13 +159,13 @@
           () => console.log('Receiver ready'),
           (err) => console.error(err))
 
-        receiver.onChangeMessage = (value) => {console.log(value)}
-
-        console.log(receiver)
+        receiver.onChangeMessage = (value) => { }
       })
     </script>
 
     <div>
+      <p>Time</p>
+      <input id="time" type="number" value="60000">
       <p>Expected</p>
       <input id="data" type="number" value="0">
       <button onclick="onStart()">START</button>
