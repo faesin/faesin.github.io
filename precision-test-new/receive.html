@@ -78,8 +78,8 @@
           messages[m] += 1
 
           let avgs = receiver.getIntensityValues(receiver.referencePositive, receiver.referenceNegative)
-          messages.positive += avgs[0]
-          messages.negative += avgs[1]
+          messages.positive += Math.max(avgs[0], avgs[1])
+          messages.negative += Math.min(avgs[0], avgs[1])
         }
 
         if(progress < time)

@@ -9,7 +9,8 @@ function Receiver(context, onStart, onError, constraints, options) {
   const defaultOpt = {
     disableBounce: false,
     bounceLenght: 10,
-    referenceFrequencies: this.defaultReferenceFrequencies
+    referenceFrequencies: this.defaultReferenceFrequencies,
+    disableReferenceNormalization: false
   }
 
   this.options = (options instanceof Object) ? Object.assign(defaultOpt, options) : defaultOpt
@@ -81,14 +82,24 @@ Receiver.prototype.checkMessage = function() {
 
   //sometimes hight frequencies' intensity gets much lower than normal
   //so i'm preventing my reference negative frequency from getting lower than 'quiet' (-100db)
-  referenceIntensities[1] = Math.max(referenceIntensities[1], -100)
+  // referenceIntensities[1] = Math.max(referenceIntensities[1], -100)
+
+  // Sometimes, interference puts positive bellow negative, so we change that
+  let max, min
+  if(!this.options.disableReferenceNormalization){
+    max = Math.max(referenceIntensities[0], referenceIntensities[1])
+    min = Math.min(referenceIntensities[0], referenceIntensities[1])
+  }else{
+    max = referenceIntensities[0]
+    min = referenceIntensities[1]
+  }
 
   //decoding the message
   let bit, message = 0, differenceToPositive, differenceToNegative
 
   for (var i = 0; i < messageIntensities.length; i++) {
-    differenceToPositive = Math.abs(messageIntensities[i]) - Math.abs(referenceIntensities[0])
-    differenceToNegative = Math.abs(messageIntensities[i]) - Math.abs(referenceIntensities[1])
+    differenceToPositive = Math.abs(messageIntensities[i]) - Math.abs(max)
+    differenceToNegative = Math.abs(messageIntensities[i]) - Math.abs(min)
     differenceToPositive = Math.abs(differenceToPositive)
     differenceToNegative = Math.abs(differenceToNegative)
 
@@ -164,7 +175,6 @@ Receiver.prototype.checkMessageLoop = function() {
   const message = this.checkMessage()
   this.updateBouncingBuffer(message)
 
-  // console.log('this.options.disableBounce', this.options.disableBounce)
   //only do something if message has changed and it's not bouncing
   if (this.lastMessage !== message && (this.options.disableBounce || !this.isBouncing(message))) {
 
