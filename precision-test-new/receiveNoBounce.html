@@ -93,6 +93,10 @@
         length = 0
         showResult(null)
 
+        receiver.lastMessage = NaN
+        receiver.onChangeMessage = receiver.nullFunction
+        receiver.onChangeMessage = (value) => {console.log(value)}
+
         window.requestAnimationFrame(checkMessage)
         setTimeout(function() {
           showResult(messages);
@@ -157,10 +161,7 @@
           () => console.log('Receiver ready'),
           (err) => console.error(err),
           null, {disableBounce: true})
-
-        receiver.onChangeMessage = (value) => {console.log(value)}
-
-        console.log(receiver)
+        
       })
     </script>
 

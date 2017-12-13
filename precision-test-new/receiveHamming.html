@@ -29,8 +29,6 @@
 
       function dec2bin(dec){
         return ("00000000" + (dec >>> 0).toString(2)).slice(-8)
-
-        // return (dec >>> 0).toString(2);
       }
 
       const hammingDistance = (x, y) => {
@@ -94,6 +92,10 @@
         messages = {}
         length = 0
         showResult(null)
+
+        receiver.lastMessage = NaN
+        receiver.onChangeMessage = receiver.nullFunction
+        receiver.onChangeMessage = (value) => {console.log(value)}
 
         window.requestAnimationFrame(checkMessage)
         setTimeout(function() {
@@ -159,8 +161,6 @@
         receiver = new Receiver(context, 
           () => console.log('Receiver ready'),
           (err) => console.error(err))
-
-        receiver.onChangeMessage = (value) => {console.log(value)}
 
         console.log(receiver)
       })
