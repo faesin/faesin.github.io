@@ -1,7 +1,7 @@
 'use strict'
 
-const minimumIntensity = -70
-const numberOfStates = 12;
+const minimumIntensity = -95
+const numberOfStates = 12
 const states = Array.apply(null, {length: numberOfStates}).map(Number.call, Number)
 
 // in gray codes
@@ -61,21 +61,29 @@ $(document).ready(() => {
   }
 
   const checkForMessage = () => {
-    let positive = receiver.getIntensityValues(receiver.referencePositive)[0]
+    let positive = Math.max(...receiver.getIntensityValues(receiver.referencePositive, receiver.referenceNegative))
     $('#positive').html(`Positive Intensity: ${positive}`)
 
     $('#pIsValid').html(`positive >= minimumIntensity : ${positive >= minimumIntensity}`)
 
     if(positive >= minimumIntensity) {
-      let msg = receiver.lastMessage
+      let msg = receiver.getIntensityValues(receiver.messageFrequencies)
       
+      for (let i = 0; i < msg.length; ++i) {
+        msg[i] = (msg[i] >= minimumIntensity) ? 1 : 0;
+      }
+
+      msg = parseInt(msg.join(''), 2)
+
       $('#received').html(`Received ${msg}`)
+      
       if(transitions[currentState][msg] != null) {
         currentState = transitions[currentState][msg]
       }
 
       $('#state').html(`Current State: ${currentState}`)
       // const page = /*fromGrayCode(msg)*/ currentState - 1
+        
       // Reveal.slide(page, 0)
     }
 
@@ -90,5 +98,5 @@ $(document).ready(() => {
   $('#state').html(`Current State: ${currentState}`)
   $('#received').html(`Received ${null}`)
   checkForMessage()
-  receiver.onChangeMessage = (msg) => { }
+  receiver.onChangeMessage = (wew) => { }
 })
