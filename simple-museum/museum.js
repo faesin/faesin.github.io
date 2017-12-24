@@ -1,6 +1,6 @@
 'use strict'
 
-const minimumIntensity = -95
+const minimumIntensity = -85
 const numberOfStates = 12
 const states = Array.apply(null, {length: numberOfStates}).map(Number.call, Number)
 
@@ -28,6 +28,8 @@ const transitions = {
   12: { 1: 11, 2: 12}
 }
 
+let bouncingBuffer = Array(10).fill(NaN)
+
 let currentState = 1
 
 function toGrayCode(n) {
@@ -50,6 +52,19 @@ function fromGrayCode(gn) {
 
 function showWarning() {
   $('#warning').show()
+}
+
+function updateBouncingBuffer (message) {
+  bouncingBuffer.push(message)
+  bouncingBuffer.shift()
+}
+
+function isBouncing () {
+  for (let i = 1; i < bouncingBuffer.length; i++)
+    if (bouncingBuffer[i] !== bouncingBuffer[i-1])
+      return true
+  
+  return false
 }
 
 $(document).ready(() => {
@@ -75,16 +90,15 @@ $(document).ready(() => {
 
       msg = parseInt(msg.join(''), 2)
 
-      $('#received').html(`Received ${msg}`)
-      
-      if(transitions[currentState][msg] != null) {
-        currentState = transitions[currentState][msg]
-      }
+      document.getElementById('received').innerHTML = `Received ${msg}`
 
-      $('#state').html(`Current State: ${currentState}`)
-      // const page = /*fromGrayCode(msg)*/ currentState - 1
+      updateBouncingBuffer(msg)
+
+      if (!isBouncing() && transitions[currentState][msg] != null) {
+        currentState = transitions[currentState][msg]
         
-      // Reveal.slide(page, 0)
+        $('#state').html(`Current State: ${currentState}`)
+      }
     }
 
     window.requestAnimationFrame(checkForMessage)
