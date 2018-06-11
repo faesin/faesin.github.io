@@ -1,8 +1,8 @@
 'use strict'
 
-const minimumIntensity = -85
-const numberOfStates = 12
-const states = Array.apply(null, {length: numberOfStates}).map(Number.call, Number)
+var minimumIntensity = -85
+var numberOfStates = 12
+var states = Array.apply(null, {length: numberOfStates}).map(Number.call, Number)
 
 // in gray codes
 // Room <NUM> - <State> = <Transition>
