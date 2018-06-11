@@ -156,7 +156,7 @@ $(document).ready(() => {
       checkForMessage()
       receiver.onChangeMessage = (wew) => { }
 
-      Reveal.slide(currentState, 0)
+      Reveal.slide(currentState - 1 , 0)
     });
     
     Reveal.addEventListener('slidechanged', function(event) {
@@ -183,7 +183,7 @@ $(document).ready(() => {
       if (!isBouncing() && transitions[currentState][msg] != null) {
         currentState = transitions[currentState][msg]
         
-        Reveal.slide(currentState, 0)
+        Reveal.slide(currentState - 1, 0)
       }
     }
 
