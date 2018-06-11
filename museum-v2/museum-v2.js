@@ -142,7 +142,7 @@ $(document).ready(() => {
   }
 
   if(getParameterByName('min') != null) {
-    minimumIntensity = (int)getParameterByName('min')
+    minimumIntensity = parseInt(getParameterByName('min'))
   }
 
   $('body').load('slides.html', function() {
