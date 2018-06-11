@@ -91,32 +91,17 @@ let bouncingBuffer = Array(10).fill(NaN)
 
 let currentState = 1
 
-function toGrayCode(n) {
-  if (n < 0) throw new RangeError("cannot convert negative numbers to gray code");
-
-  return n ^ (n >>> 1)
-}
-
-function fromGrayCode(gn) {
-  if (gn < 0) throw new RangeError('gray code numbers cannot be negative')
-
-  var g = gn.toString(2).split('')
-  var b = []
-  b[0] = g[0]
-  for (var i = 1; i < g.length; i++)
-    b[i] = g[i] ^ b[i - 1]
-
-  return parseInt(b.join(""), 2)
-}
 
 function showWarning() {
   $('#warning').show()
 }
 
+
 function updateBouncingBuffer (message) {
   bouncingBuffer.push(message)
   bouncingBuffer.shift()
 }
+
 
 function isBouncing () {
   for (let i = 1; i < bouncingBuffer.length; i++)
@@ -125,6 +110,7 @@ function isBouncing () {
   
   return false
 }
+
 
 function getParameterByName(name, url) {
   if (!url) {
@@ -146,6 +132,7 @@ function getParameterByName(name, url) {
   return decodeURIComponent(results[2].replace(/\+/g, " "))
 }
 
+
 $(document).ready(() => {
   let context, receiver
 
@@ -154,11 +141,33 @@ $(document).ready(() => {
     return
   }
 
+  if(getParameterByName('min') != null) {
+    minimumIntensity = (int)getParameterByName('min')
+  }
+
+  $('body').load('slides.html', function() {
+
+    Reveal.addEventListener('ready', function(event) {
+      context = (new AudioMarkings()).context
+      receiver = new Receiver(context,
+                              () => console.log('Receiver ready'),
+                              (err) => console.error(err))
+
+      checkForMessage()
+      receiver.onChangeMessage = (wew) => { }
+
+      Reveal.slide(currentState, 0)
+    });
+    
+    Reveal.addEventListener('slidechanged', function(event) {
+      console.log(event.indexh, event.indexv);
+    });
+
+    Reveal.initialize();
+  });
+
   const checkForMessage = () => {
     let positive = Math.max(...receiver.getIntensityValues(receiver.referencePositive, receiver.referenceNegative))
-    $('#positive').html(`Positive Intensity: ${positive}`)
-
-    $('#pIsValid').html(`positive >= minimumIntensity : ${positive >= minimumIntensity}`)
 
     if(positive >= minimumIntensity) {
       let msg = receiver.getIntensityValues(receiver.messageFrequencies)
@@ -169,27 +178,15 @@ $(document).ready(() => {
 
       msg = parseInt(msg.join(''), 2)
 
-      document.getElementById('received').innerHTML = `Received ${msg}`
-
       updateBouncingBuffer(msg)
 
       if (!isBouncing() && transitions[currentState][msg] != null) {
         currentState = transitions[currentState][msg]
         
-        $('#state').html(`Current State: ${currentState}`)
+        Reveal.slide(currentState, 0)
       }
     }
 
     window.requestAnimationFrame(checkForMessage)
   }
-
-  context = (new AudioMarkings()).context
-  receiver = new Receiver(context,
-                          () => console.log('Receiver ready'),
-                          (err) => console.error(err))
-
-  $('#state').html(`Current State: ${currentState}`)
-  $('#received').html(`Received ${null}`)
-  checkForMessage()
-  receiver.onChangeMessage = (wew) => { }
 })
