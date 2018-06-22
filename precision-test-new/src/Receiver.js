@@ -43,7 +43,14 @@ function Receiver (context, onStart, onError, constraints, options) {
 
   // requesting the user's microphone
   if (navigator.mediaDevices.getUserMedia) {
+    console.log(navigator.mediaDevices.getSupportedConstraints())
     navigator.mediaDevices.getUserMedia(this.constraints).then(this.onMicrophoneReady.bind(this, onStart)).catch(onError)
+    console.log('==================== getSupportedConstraints ====================')
+    console.log(navigator.mediaDevices.getSupportedConstraints())
+    console.log('=================================================================')
+    console.log('======================== getConstraints ========================')
+    console.log(navigator.mediaDevices.getConstraints())
+    console.log('================================================================')
   } else {
     // support for deprecated version of getUserMedia
     var getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia
