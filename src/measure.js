@@ -23,7 +23,7 @@ $(document).ready(function() {
 function startAmbient() {
 
 	//creating our audio context
-	var context = (new AudioWM()).context;
+	var context = (new AudioMarkings()).context;
 
 	//start client and adapt out ambient
 	client = new Client(context, frequencies, adaptAmbient, onChangeFrequency);
