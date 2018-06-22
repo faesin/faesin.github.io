@@ -216,7 +216,7 @@ Receiver.prototype.defaultMediaStreamConstraints = {
     //   {googNoiseSuppression: false},
     //   {googHighpassFilter: false},
     //   {googTypingNoiseDetection: false}
-    ]
+    // ]
   },
   video: false
 }
