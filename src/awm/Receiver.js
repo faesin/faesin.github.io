@@ -205,11 +205,11 @@ Receiver.prototype.nullFunction = function () { }
 // CONSTANTS
 Receiver.prototype.defaultMediaStreamConstraints = {
   audio: {
-    echoCancellation: false,
-    autoGainControl: false,
-    noiseSuppression: false
-
-    mandatory: { echoCancellation: false },
+    mandatory: {
+      echoCancellation: false,
+      autoGainControl: false,
+      noiseSuppression: false
+    },
     optional: [
       {googEchoCancellation: false},
       {googAutoGainControl: false},
