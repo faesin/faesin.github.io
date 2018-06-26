@@ -207,8 +207,8 @@ Receiver.prototype.defaultMediaStreamConstraints = {
   audio: {
     mandatory: {
       echoCancellation: false,
-      autoGainControl: false,
-      noiseSuppression: false
+      // autoGainControl: false,
+      // noiseSuppression: false
     },
     optional: [
       {googEchoCancellation: false},
