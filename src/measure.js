@@ -9,7 +9,7 @@ var prominent;
 $(document).ready(function() {
 
 	//checking if we can use the device's microphone
-	if(!navigator.getUserMedia && !navigator.webkitGetUserMedia) {
+	if(!navigator.getUserMedia && !navigator.webkitGetUserMedia && !navigator.mediaDevices.getUserMedia) {
 		showWarning();
 		return;
 	}
