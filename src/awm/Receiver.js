@@ -206,18 +206,25 @@ Receiver.prototype.nullFunction = function () { }
 Receiver.prototype.defaultMediaStreamConstraints = {
   audio: {
     echoCancellation: false,
-    autoGainControll: false,
+    autoGainControl: false,
     noiseSuppression: false
 
-    // mandatory: { echoCancellation: false },
-    // optional: [
-    //   {googEchoCancellation: false},
-    //   {googAutoGainControl: false},
-    //   {googAutoGainControl2: false},
-    //   {googNoiseSuppression: false},
-    //   {googHighpassFilter: false},
-    //   {googTypingNoiseDetection: false}
-    // ]
+    mandatory: { echoCancellation: false },
+    optional: [
+      {googEchoCancellation: false},
+      {googAutoGainControl: false},
+      {googAutoGainControl2: false},
+      {googExperimentalAutoGainControl: false},
+      {googNoiseSuppression: false},
+      {googExperimentalNoiseSuppression: false},
+      {googHighpassFilter: false},
+      {googTypingNoiseDetection: false},
+      {googBeamforming: false},
+      {googArrayGeometry: false},
+      {googAudioMirroring: false},
+      {googNoiseReduction: false},
+      {mozAutoGainControl: false}
+    ]
   },
   video: false
 }
