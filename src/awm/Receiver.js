@@ -202,30 +202,34 @@ Receiver.prototype.isBouncing = function () {
 // my 'Null Object' function (it can look strange, but believe me, it's damn useful!)
 Receiver.prototype.nullFunction = function () { }
 
-
+//
 // CONSTANTS
 Receiver.prototype.defaultMediaStreamConstraints = {
   audio: {
     mandatory: {
-      echoCancellation: true,
+      "echoCancellation": "false",
+      "googEchoCancellation": "false",
+      "googAutoGainControl": "false",
+      "googNoiseSuppression": "false",
+      "googHighpassFilter": "false"
       // autoGainControl: false,
       // noiseSuppression: false
     },
-    // optional: [
-    //   {googEchoCancellation: false},
-    //   {googAutoGainControl: false},
-    //   {googAutoGainControl2: false},
-    //   {googExperimentalAutoGainControl: false},
-    //   {googNoiseSuppression: false},
-    //   {googExperimentalNoiseSuppression: false},
-    //   {googHighpassFilter: false},
-    //   {googTypingNoiseDetection: false},
-    //   {googBeamforming: false},
-    //   {googArrayGeometry: false},
-    //   {googAudioMirroring: false},
-    //   {googNoiseReduction: false},
-    //   {mozAutoGainControl: false}
-    // ]
+    optional: [
+      // {googEchoCancellation: false},
+      // {googAutoGainControl: false},
+      // {googAutoGainControl2: false},
+      // {googExperimentalAutoGainControl: false},
+      // {googNoiseSuppression: false},
+      // {googExperimentalNoiseSuppression: false},
+      // {googHighpassFilter: false},
+      // {googTypingNoiseDetection: false},
+      // {googBeamforming: false},
+      // {googArrayGeometry: false},
+      // {googAudioMirroring: false},
+      // {googNoiseReduction: false},
+      // {mozAutoGainControl: false}
+    ]
   },
   video: false
 }
