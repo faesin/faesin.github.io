@@ -19,7 +19,11 @@ function Receiver (context, onStart, onError, constraints, options) {
   this.loop = this.nullFunction
   this.lastMessage = NaN
 
-  if (this.options.bounceLenght != null && !Number.isNaN(this.options.bounceLenght)) { this.bouncingBuffer = Array(this.options.bounceLenght).fill(NaN) } else { this.bouncingBuffer = Array(10).fill(NaN) }
+  if (this.options.bounceLenght != null && !Number.isNaN(this.options.bounceLenght)) {
+    this.bouncingBuffer = Array(this.options.bounceLenght).fill(NaN)
+  } else {
+    this.bouncingBuffer = Array(10).fill(NaN)
+  }
 
   // preparing onChangeMessage event
   var onChangeMessage = this.nullFunction
@@ -43,9 +47,6 @@ function Receiver (context, onStart, onError, constraints, options) {
 
   // requesting the user's microphone
   if (navigator.mediaDevices.getUserMedia) {
-    console.log('==================== getSupportedConstraints ====================')
-    console.log(navigator.mediaDevices.getSupportedConstraints())
-    console.log('=================================================================')
     navigator.mediaDevices.getUserMedia(this.constraints).then(this.onMicrophoneReady.bind(this, onStart)).catch(onError)
   } else {
     // support for deprecated version of getUserMedia
@@ -201,30 +202,30 @@ Receiver.prototype.isBouncing = function () {
 // my 'Null Object' function (it can look strange, but believe me, it's damn useful!)
 Receiver.prototype.nullFunction = function () { }
 
-//
+
 // CONSTANTS
 Receiver.prototype.defaultMediaStreamConstraints = {
   audio: {
     mandatory: {
-      echoCancellation: false,
+      echoCancellation: true,
       // autoGainControl: false,
       // noiseSuppression: false
     },
-    optional: [
-      {googEchoCancellation: false},
-      {googAutoGainControl: false},
-      {googAutoGainControl2: false},
-      {googExperimentalAutoGainControl: false},
-      {googNoiseSuppression: false},
-      {googExperimentalNoiseSuppression: false},
-      {googHighpassFilter: false},
-      {googTypingNoiseDetection: false},
-      {googBeamforming: false},
-      {googArrayGeometry: false},
-      {googAudioMirroring: false},
-      {googNoiseReduction: false},
-      {mozAutoGainControl: false}
-    ]
+    // optional: [
+    //   {googEchoCancellation: false},
+    //   {googAutoGainControl: false},
+    //   {googAutoGainControl2: false},
+    //   {googExperimentalAutoGainControl: false},
+    //   {googNoiseSuppression: false},
+    //   {googExperimentalNoiseSuppression: false},
+    //   {googHighpassFilter: false},
+    //   {googTypingNoiseDetection: false},
+    //   {googBeamforming: false},
+    //   {googArrayGeometry: false},
+    //   {googAudioMirroring: false},
+    //   {googNoiseReduction: false},
+    //   {mozAutoGainControl: false}
+    // ]
   },
   video: false
 }
