@@ -47,7 +47,7 @@ function Receiver (context, onStart, onError, constraints, options) {
 
   // requesting the user's microphone
   if (navigator.mediaDevices.getUserMedia) {
-    navigator.mediaDevices.getUserMedia(this.constraints).then(this.onMicrophoneReady.bind(this, onStart)).catch(onError)
+    navigator.mediaDevices.getUserMedia(this.constraints).then(this.onMicrophoneReady.bind(this, onStart)).catch(function(err) {console.error(err)})
   } else {
     // support for deprecated version of getUserMedia
     var getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia
