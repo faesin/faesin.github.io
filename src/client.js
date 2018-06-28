@@ -8,7 +8,7 @@ function Client(context, frequencies, callback, onChange) {
   this.lastValue = 0;
 
   this.loop = this.checkingLoop;
-  this.receiver = new Receiver(this.onClientReady.bind(this, callback), function(e) {console.log(e)}, context);
+  this.receiver = new Receiver(context, this.onClientReady.bind(this, callback), function(e) {console.log(e)});
 }
 
 Client.prototype.onClientReady = function(callback) {
