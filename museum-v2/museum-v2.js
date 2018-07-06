@@ -154,8 +154,8 @@ $(document).ready(() => {
                               (err) => console.error(err))
 
       checkForMessage()
-      receiver.onChangeMessage = (wew) => { }
-
+      receiver.onChangeMessage = (value) => {console.log(value)}
+      
       Reveal.slide(currentState - 1 , 0)
     });
     
