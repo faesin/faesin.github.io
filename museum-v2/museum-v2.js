@@ -171,6 +171,7 @@ $(document).ready(() => {
 
           // updateBouncingBuffer(msg)
 
+          console.log(transitions[currentState])
           if (/*!isBouncing() && */transitions[currentState][msg] != null) {
             currentState = transitions[currentState][msg]
 
