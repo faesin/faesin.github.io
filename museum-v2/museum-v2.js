@@ -155,6 +155,7 @@ $(document).ready(() => {
 
       checkForMessage()
       receiver.onChangeMessage = (value) => {
+        console.log(value)
         let positive = Math.max(...receiver.getIntensityValues(receiver.referencePositive, receiver.referenceNegative))
 
         if(positive >= minimumIntensity) {
