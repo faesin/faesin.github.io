@@ -155,22 +155,26 @@ $(document).ready(() => {
 
       checkForMessage()
       receiver.onChangeMessage = (value) => {
-        console.log(value)
+        console.log('changed', value)
+
         let positive = Math.max(...receiver.getIntensityValues(receiver.referencePositive, receiver.referenceNegative))
 
         if(positive >= minimumIntensity) {
-          let msg = value
+          let msg = receiver.getIntensityValues(receiver.messageFrequencies)
           
           for (let i = 0; i < msg.length; ++i) {
             msg[i] = (msg[i] >= minimumIntensity) ? 1 : 0;
           }
 
           msg = parseInt(msg.join(''), 2)
+          console.log('activated', msg)
 
-          updateBouncingBuffer(msg)
+          // updateBouncingBuffer(msg)
 
-          if (!isBouncing() && transitions[currentState][msg] != null) {
+          if (/*!isBouncing() && */transitions[currentState][msg] != null) {
             currentState = transitions[currentState][msg]
+
+            console.log('state', msg)
             
             Reveal.slide(currentState - 1, 0)
           }
