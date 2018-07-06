@@ -156,34 +156,6 @@ $(document).ready(() => {
       checkForMessage()
       receiver.onChangeMessage = (value) => {
         console.log('changed', value)
-
-        let positive = Math.max(...receiver.getIntensityValues(receiver.referencePositive, receiver.referenceNegative))
-
-        console.log('positive: ', positive, 'minimumIntensity: ', minimumIntensity)
-        console.log('positive >= minimumIntensity ? ', positive >= minimumIntensity)
-        
-        if(positive >= minimumIntensity) {
-          let msg = receiver.getIntensityValues(receiver.messageFrequencies)
-          
-          for (let i = 0; i < msg.length; ++i) {
-            msg[i] = (msg[i] >= minimumIntensity) ? 1 : 0;
-          }
-
-          msg = parseInt(msg.join(''), 2)
-          console.log('activated', msg)
-
-          // updateBouncingBuffer(msg)
-
-          console.log(transitions[currentState])
-          console.log(`transitions[${currentState}][${msg}]} = ${transitions[currentState][msg]}`)
-          if (/*!isBouncing() && */transitions[currentState][msg] != null) {
-            currentState = transitions[currentState][msg]
-
-            console.log('state', msg)
-            
-            Reveal.slide(currentState - 1, 0)
-          }
-        }
       }
       
       Reveal.slide(currentState - 1 , 0)
@@ -197,6 +169,36 @@ $(document).ready(() => {
   });
 
   const checkForMessage = () => {
-    
+    let positive = Math.max(...receiver.getIntensityValues(receiver.referencePositive, receiver.referenceNegative))
+
+    console.log('positive: ', positive, 'minimumIntensity: ', minimumIntensity)
+    console.log('positive >= minimumIntensity ? ', positive >= minimumIntensity)
+
+    if(positive >= minimumIntensity) {
+      let msg = receiver.getIntensityValues(receiver.messageFrequencies)
+      
+      for (let i = 0; i < msg.length; ++i) {
+        msg[i] = (msg[i] >= minimumIntensity) ? 1 : 0;
+      }
+
+      msg = parseInt(msg.join(''), 2)
+      console.log('activated', msg)
+
+      updateBouncingBuffer(msg)
+
+      console.log('is bouncing? ', isBouncing())
+      console.log(transitions[currentState])
+      console.log(`transitions[${currentState}][${msg}]} = ${transitions[currentState][msg]}`)
+
+      if (!isBouncing() && transitions[currentState][msg] != null) {
+        currentState = transitions[currentState][msg]
+        
+        console.log('state', currentState)
+        
+        Reveal.slide(currentState - 1, 0)
+      }
+    }
+
+    window.requestAnimationFrame(checkForMessage)
   }
 })
