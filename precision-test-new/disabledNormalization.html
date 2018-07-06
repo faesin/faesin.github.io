@@ -29,7 +29,7 @@
 
     <script type="text/javascript">    
       (function() {
-        if(!navigator.getUserMedia && !navigator.webkitGetUserMedia) {
+        if(!navigator.getUserMedia && !navigator.webkitGetUserMedia && !navigator.mediaDevices.getUserMedia) {
           $('#warning').show()
           return
         }

@@ -16,6 +16,7 @@ function Emitter (context, options) {
 }
 
 Emitter.prototype = Object.create(AudioMarkings.prototype)
+
 Emitter.prototype.initialize = function (options) {
   // set behavior
   const start = !options.start || Number.isNaN(options.start) ? this.defaultMessageParameters.start : options.start
