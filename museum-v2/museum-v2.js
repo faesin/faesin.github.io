@@ -159,6 +159,9 @@ $(document).ready(() => {
 
         let positive = Math.max(...receiver.getIntensityValues(receiver.referencePositive, receiver.referenceNegative))
 
+        console.log('positive: ', positive, 'minimumIntensity: ', minimumIntensity)
+        console.log('positive >= minimumIntensity ? ', positive >= minimumIntensity)
+        
         if(positive >= minimumIntensity) {
           let msg = receiver.getIntensityValues(receiver.messageFrequencies)
           
@@ -172,6 +175,7 @@ $(document).ready(() => {
           // updateBouncingBuffer(msg)
 
           console.log(transitions[currentState])
+          console.log(`transitions[${currentState}][${msg}]} = ${transitions[currentState][msg]}`)
           if (/*!isBouncing() && */transitions[currentState][msg] != null) {
             currentState = transitions[currentState][msg]
 
